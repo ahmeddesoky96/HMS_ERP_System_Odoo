@@ -1,0 +1,61 @@
+<odoo>
+    <data>
+        <record id='record_patient' model='ir.actions.act_window'>
+        <field name='name'>Patients</field>
+        <field name='res_model'>hms.patient</field>
+        
+        </record>
+        <record id = 'patient_form_view' model = 'ir.ui.view'>
+            <field name = 'name'> Patient Form View</field>
+            <field name="model">hms.patient</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group string="Personal Information" >
+                            <field name="firstName" required = 'True'/>
+                            <field name="lastName" required = 'True'/>
+                            <field name="email" required='True'/>
+                            <field name="birthDate"/>
+                            <field name="age"/>
+                            <field name="blood_type"/>
+                            <field name="patientStatus"/>
+                            <field name="PCR"/>
+                            <field name="CR_Ratio" attrs = "{'required' : [('PCR' ,'=' , True)] }"/>
+                            <field name="image"/>
+                            <field name="address"/>
+                            <field name="histroy" attrs = "{ 'invisible' : [('age' ,'&lt;', 50)] }"/>
+
+                        </group>
+                        <notebook>
+
+                            <page string = 'Department Information'>
+                                <group string ='Department Info'>
+                                    <field name="department_name"/>
+                                    <field name="department_capacity"/>
+                                    <field name="doctor_name" attrs="{'readonly': [('department_name', '=', False)]}"/>
+                                </group>
+                            </page>
+                            <page string = 'Status Log'>
+                                    <field name="patientLog" readonly='1'>
+                                        <tree>
+                                            <field name="create_uid"/>
+                                            <field name="create_date" />
+                                            <field name="description" />
+                                        </tree>
+                                    </field>
+                                
+                            </page>
+
+            
+
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+         <menuitem name='EscaHospital' id='hms'/>
+         <menuitem name='Hospital_Patient' id='hms_patient' sequence='1' parent='hms' action='record_patient'/>
+    </data>
+</odoo>
